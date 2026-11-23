@@ -1,4 +1,4 @@
-# Secrets and local config
+﻿# Secrets and local config
 .env
 .env.*
 !.env.example
@@ -13,7 +13,7 @@ cookies.txt
 # Private data and backups
 private/
 backups/
-screenshots/
+/screenshots/
 test-results/
 reports/
 *.log
