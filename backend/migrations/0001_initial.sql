@@ -1,0 +1,13 @@
+PRAGMA foreign_keys = ON;
+CREATE TABLE IF NOT EXISTS snapshots (id INTEGER PRIMARY KEY CHECK(id=1), version INTEGER NOT NULL DEFAULT 0, payload TEXT NOT NULL, updated_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS habit_events (id TEXT PRIMARY KEY, event_type TEXT NOT NULL, event_date TEXT NOT NULL, category TEXT, task_id TEXT, wake TEXT, planned_start TEXT, actual_start TEXT, duration_min INTEGER, payload TEXT NOT NULL, received_at TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS idx_habit_events_date ON habit_events(event_date);
+CREATE INDEX IF NOT EXISTS idx_habit_events_cat ON habit_events(category, event_type);
+CREATE TABLE IF NOT EXISTS chat_messages (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, role TEXT NOT NULL, model TEXT, content TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS idx_chat_created ON chat_messages(created_at);
+CREATE TABLE IF NOT EXISTS ai_usage (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, model TEXT NOT NULL, input_tokens INTEGER NOT NULL DEFAULT 0, output_tokens INTEGER NOT NULL DEFAULT 0, purpose TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS idx_usage_created ON ai_usage(created_at);
+CREATE TABLE IF NOT EXISTS push_subscriptions (endpoint TEXT PRIMARY KEY, subscription TEXT NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS reminders (id TEXT PRIMARY KEY, task_id TEXT, day TEXT NOT NULL, title TEXT NOT NULL, remind_at INTEGER NOT NULL, sent_at INTEGER, error TEXT);
+CREATE INDEX IF NOT EXISTS idx_reminders_due ON reminders(remind_at,sent_at);
+CREATE TABLE IF NOT EXISTS request_usage (day TEXT PRIMARY KEY, requests INTEGER NOT NULL DEFAULT 0, max_calls INTEGER NOT NULL DEFAULT 0);

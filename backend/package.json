@@ -1,0 +1,17 @@
+{
+  "name": "jarvis-routine-backend",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "db:local": "wrangler d1 migrations apply routine-db --local",
+    "db:remote": "wrangler d1 migrations apply routine-db --remote",
+    "test": "node --test test/*.test.mjs && node --test ../tests/api-integration.mjs",
+    "test:worker": "node --test test/*.test.mjs",
+    "test:api": "node --test ../tests/api-integration.mjs"
+  },
+  "dependencies": {"@block65/webcrypto-web-push": "^2.0.0"},
+  "devDependencies": {"wrangler": "^4.0.0"}
+}

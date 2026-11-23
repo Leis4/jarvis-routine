@@ -1,0 +1,28 @@
+/* JARVIS Routine — compact date navigation for mobile */
+.jr-date-nav{margin:9px 0 14px;padding:10px 11px;border:1px solid var(--line, #334155);border-radius:16px;background:var(--card, #142037)}
+.jr-date-controls{display:flex;flex-wrap:wrap;gap:6px;align-items:stretch}
+.jr-date-controls>button,.jr-month-head>button{min-height:42px;min-width:42px;padding:7px 11px;border:1px solid var(--line, #334155);background:var(--bg, #0c1424);border-radius:12px;color:var(--text, #e8eefb);font:inherit;cursor:pointer}
+.jr-date-controls>button:focus-visible,.jr-month button:focus-visible,.jr-date-picker input:focus-visible{outline:2px solid var(--accent, #6daaff);outline-offset:2px}
+.jr-date-controls>button:last-child{flex:1;white-space:nowrap}
+.jr-date-picker{position:relative;display:flex;align-items:center;gap:5px;flex:1;min-width:145px;min-height:42px;padding:4px 8px;border:1px solid var(--line, #334155);border-radius:12px;background:var(--bg, #0c1424);color:var(--text, #e8eefb)}
+.jr-date-picker span{font-size:11px;color:var(--sub, #9aaac6)}
+.jr-date-value{font-size:14px;font-weight:700;white-space:nowrap}
+.jr-date-caret{font-size:10px;color:var(--sub, #9aaac6);font-style:normal;margin-left:1px}
+.jr-date-picker input{position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;cursor:pointer;-webkit-appearance:none;appearance:none}
+.jr-week-label{padding:9px 2px 0;color:var(--sub, #9aaac6);font-size:12px;line-height:1.5;letter-spacing:.01em}
+.jr-week-label span{white-space:nowrap}
+.jr-month{border-top:1px solid var(--line, #334155);margin-top:10px;padding-top:10px}
+.jr-month-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.jr-month-head strong{font-size:14px;text-transform:capitalize;text-align:center}
+.jr-month-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.jr-weekday{text-align:center;font-size:10px;font-weight:700;color:var(--sub, #9aaac6);padding:5px 0}
+.jr-cal-cell{min-width:0;min-height:40px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--text, #e8eefb);font:inherit;cursor:pointer}
+.jr-cal-cell b{font-size:12px}
+.jr-cal-cell.jr-outside{color:var(--sub, #9aaac6);opacity:.48}
+.jr-cal-cell.jr-current{border-color:var(--accent, #6daaff)}
+.jr-cal-cell.jr-selected{background:var(--accent, #6daaff);color:#091729}
+.jr-help{font-size:11px;color:var(--sub, #9aaac6);margin:8px 1px 0}
+.jr-week-settings{font-size:13px;margin:8px 0}
+.jr-setting-buttons{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.jr-setting-buttons>button{min-height:42px}
+@media(max-width:380px){.jr-date-controls{gap:5px}.jr-date-controls>button{min-width:40px;padding:6px 8px}.jr-date-picker{min-width:125px}.jr-date-picker span{display:none}.jr-cal-cell{min-height:38px}}

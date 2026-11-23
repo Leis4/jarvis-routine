@@ -1,0 +1,43 @@
+# Secrets and local config
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+.wrangler/
+*.key
+*.pem
+*.session
+cookies.txt
+
+# Private data and backups
+private/
+backups/
+screenshots/
+test-results/
+reports/
+*.log
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python (tests)
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Archives and local snapshots
+*.zip
+*.7z
+*.rar

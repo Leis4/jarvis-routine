@@ -1,0 +1,6 @@
+[allowlist]
+description = "Reviewed false positives: browser localStorage key names, not credentials."
+regexes = [
+  '''jarvis_focus_v1''',
+  '''jarvis_routine_ai_v3''',
+]

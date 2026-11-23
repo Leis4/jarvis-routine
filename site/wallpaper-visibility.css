@@ -1,0 +1,268 @@
+/* JARVIS v49 — living background layers, glass surfaces, micro-motion.
+   Loaded AFTER premium.css. Keeps user wallpaper choice in localStorage.
+
+   Layers: body background (0) -> #wallpaper scene (0, fixed)
+           -> #app (1) -> nav (50) -> modal (60) -> toast (70) -> focus (80). */
+
+#wallpaper {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; display: block; overflow: hidden;
+  contain: strict;
+}
+#wallpaper canvas {
+  position: absolute; inset: 0; width: 100% !important; height: 100% !important;
+  display: block; pointer-events: none;
+}
+#wallpaper.wp-live::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(120% 70% at 85% 108%, rgba(92, 58, 190, .30), transparent 62%),
+    radial-gradient(110% 70% at 8% 108%, rgba(0, 150, 190, .18), transparent 60%),
+    radial-gradient(120% 80% at 50% 110%, rgba(3, 7, 15, .10), rgba(2, 5, 12, .55) 82%);
+  mix-blend-mode: normal;
+}
+html[data-theme="light"] #wallpaper.wp-live::after {
+  background: radial-gradient(120% 80% at 50% 110%, rgba(255, 255, 255, 0), rgba(236, 242, 255, .45) 85%);
+}
+@media (prefers-color-scheme: light) {
+  html:not([data-theme="dark"]) #wallpaper.wp-live::after {
+    background: radial-gradient(120% 80% at 50% 110%, rgba(255, 255, 255, 0), rgba(236, 242, 255, .45) 85%);
+  }
+}
+
+/* STILL — a deliberate cinematic gradient, no GPU, no RAF. */
+html[data-wallpaper="still"] #wallpaper.wp-still {display:block}
+#wallpaper.wp-still {
+  background:
+    radial-gradient(75% 42% at 16% 2%, rgba(78, 150, 255, .62), transparent 60%),
+    radial-gradient(62% 40% at 86% 16%, rgba(154, 92, 246, .52), transparent 64%),
+    radial-gradient(90% 55% at 46% 100%, rgba(22, 166, 214, .40), transparent 66%),
+    radial-gradient(55% 34% at 6% 74%, rgba(60, 140, 255, .30), transparent 72%),
+    linear-gradient(165deg, #0d2148 0%, #081530 52%, #060d1c 100%);
+}
+html[data-theme="light"] #wallpaper.wp-still {
+  background:
+    radial-gradient(75% 42% at 16% 2%, rgba(92, 156, 250, .50), transparent 60%),
+    radial-gradient(62% 40% at 86% 16%, rgba(172, 124, 246, .44), transparent 64%),
+    radial-gradient(90% 55% at 46% 100%, rgba(112, 200, 244, .38), transparent 66%),
+    linear-gradient(165deg, #f5f9ff 0%, #e7eefb 54%, #eef2fa 100%);
+}
+@media (prefers-color-scheme: light) {
+  html:not([data-theme="dark"]) #wallpaper.wp-still {
+    background:
+      radial-gradient(75% 42% at 16% 2%, rgba(92, 156, 250, .50), transparent 60%),
+      radial-gradient(62% 40% at 86% 16%, rgba(172, 124, 246, .44), transparent 64%),
+      radial-gradient(90% 55% at 46% 100%, rgba(112, 200, 244, .38), transparent 66%),
+      linear-gradient(165deg, #f5f9ff 0%, #e7eefb 54%, #eef2fa 100%);
+  }
+}
+
+html[data-wallpaper="aura"] #app,
+html[data-wallpaper="fluid"] #app {position:relative;z-index:1;background:transparent}
+
+/* Dark glass palette (default for dark and auto-dark). */
+html[data-wallpaper="aura"],
+html[data-wallpaper="fluid"] {
+  --wp-hero-bg:linear-gradient(145deg,rgba(14,26,52,.52),rgba(10,17,36,.64));
+  --wp-hero-line:rgba(170,207,255,.24);
+  --wp-hero-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 18px 42px rgba(0,0,0,.30);
+  --wp-card-bg:rgba(12,22,43,.58);
+  --wp-card-line:rgba(172,197,238,.17);
+  --wp-nav-bg:rgba(8,15,29,.74);
+  --wp-chip-bg:rgba(255,255,255,.06);
+}
+/* Light glass palette: explicit light theme. */
+html[data-theme="light"][data-wallpaper="aura"],
+html[data-theme="light"][data-wallpaper="fluid"] {
+  --wp-hero-bg:linear-gradient(145deg,rgba(255,255,255,.62),rgba(240,246,255,.74));
+  --wp-hero-line:rgba(16,24,40,.12);
+  --wp-hero-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 14px 34px rgba(16,24,40,.12);
+  --wp-card-bg:rgba(255,255,255,.66);
+  --wp-card-line:rgba(16,24,40,.11);
+  --wp-nav-bg:rgba(255,255,255,.72);
+  --wp-chip-bg:rgba(16,24,40,.05);
+}
+@media (prefers-color-scheme: light) {
+  html:not([data-theme="dark"])[data-wallpaper="aura"],
+  html:not([data-theme="dark"])[data-wallpaper="fluid"] {
+    --wp-hero-bg:linear-gradient(145deg,rgba(255,255,255,.62),rgba(240,246,255,.74));
+    --wp-hero-line:rgba(16,24,40,.12);
+    --wp-hero-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 14px 34px rgba(16,24,40,.12);
+    --wp-card-bg:rgba(255,255,255,.66);
+    --wp-card-line:rgba(16,24,40,.11);
+    --wp-nav-bg:rgba(255,255,255,.72);
+    --wp-chip-bg:rgba(16,24,40,.05);
+  }
+}
+
+/* Glass surfaces. Cards get translucency and a lit edge; only large surfaces
+   use backdrop-filter (iOS cost is per layer, not per row). */
+html[data-wallpaper="aura"] .hero,
+html[data-wallpaper="fluid"] .hero,
+html[data-wallpaper="aura"] .ai-hero,
+html[data-wallpaper="fluid"] .ai-hero,
+html[data-wallpaper="aura"] .smart-banner,
+html[data-wallpaper="fluid"] .smart-banner {
+  background:var(--wp-hero-bg) !important;
+  border:1px solid var(--wp-hero-line);
+  box-shadow:var(--wp-hero-shadow);
+  -webkit-backdrop-filter:blur(14px) saturate(135%);
+  backdrop-filter:blur(14px) saturate(135%);
+}
+html[data-wallpaper="aura"] .card,
+html[data-wallpaper="fluid"] .card {
+  background:var(--wp-card-bg);
+  border-color:var(--wp-card-line);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 12px 30px rgba(0,0,0,.20);
+}
+html[data-wallpaper="aura"] .card .card,
+html[data-wallpaper="fluid"] .card .card {
+  background:var(--wp-chip-bg);
+  box-shadow:none;
+}
+html[data-wallpaper="aura"] .nav,
+html[data-wallpaper="fluid"] .nav {
+  background:var(--wp-nav-bg);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
+  backdrop-filter:blur(20px) saturate(150%);
+}
+html[data-wallpaper="aura"] .task-row,
+html[data-wallpaper="fluid"] .task-row,
+html[data-wallpaper="aura"] .habit-inline,
+html[data-wallpaper="fluid"] .habit-inline {
+  background:rgba(8,16,32,.52);
+}
+html[data-theme="light"][data-wallpaper="aura"] .task-row,
+html[data-theme="light"][data-wallpaper="fluid"] .task-row,
+html[data-theme="light"][data-wallpaper="aura"] .habit-inline,
+html[data-theme="light"][data-wallpaper="fluid"] .habit-inline {
+  background:rgba(255,255,255,.72);
+}
+html[data-wallpaper="aura"] .task-row.done,
+html[data-wallpaper="fluid"] .task-row.done {opacity:.72;background:rgba(8,16,32,.64)}
+html[data-wallpaper="aura"] .task-row.past,
+html[data-wallpaper="fluid"] .task-row.past {opacity:.8}
+html[data-theme="light"][data-wallpaper="aura"] .task-row.done,
+html[data-theme="light"][data-wallpaper="fluid"] .task-row.done {opacity:.8;background:rgba(255,255,255,.8)}
+
+/* Focus overlay: let the living scene show around the timer. */
+html[data-wallpaper="aura"] .focus-screen,
+html[data-wallpaper="fluid"] .focus-screen {
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(60,110,200,.16), transparent 62%),
+    rgba(5,10,22,.36);
+  -webkit-backdrop-filter:blur(7px) saturate(125%);
+  backdrop-filter:blur(7px) saturate(125%);
+}
+html[data-theme="light"][data-wallpaper="aura"] .focus-screen,
+html[data-theme="light"][data-wallpaper="fluid"] .focus-screen {
+  background:radial-gradient(120% 90% at 50% 0%, rgba(120,160,235,.18), transparent 62%), rgba(244,248,255,.58);
+}
+html[data-wallpaper="aura"] .focus-ring::before,
+html[data-wallpaper="fluid"] .focus-ring::before {
+  content:""; position:absolute; inset:-28px; border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle, rgba(90,150,255,.22) 0%, rgba(120,80,220,.14) 55%, transparent 72%);
+  animation:jrAuraBreathe 6s ease-in-out infinite;
+}
+.focus-screen.running .focus-ring::before {animation-duration:3.4s}
+@keyframes jrAuraBreathe {
+  0%,100% {opacity:.55; transform:scale(.94)}
+  50% {opacity:1; transform:scale(1.06)}
+}
+
+/* ── Interface micro-motion (vector/CSS only, no GIF) ── */
+@keyframes jrNavPop {
+  0% {transform:translateY(0) scale(.86)}
+  55% {transform:translateY(-2px) scale(1.12)}
+  100% {transform:translateY(-1px) scale(1.06)}
+}
+.navbutton.active .ico {animation:jrNavPop .34s cubic-bezier(.2,.9,.25,1.2)}
+.sub-nav button.sel .ico {animation:jrNavPop .34s cubic-bezier(.2,.9,.25,1.2)}
+
+@keyframes jrCheckPop {
+  0% {transform:scale(.72)}
+  60% {transform:scale(1.16)}
+  100% {transform:scale(1)}
+}
+.task-check {transition:background .16s,border-color .16s,transform .16s}
+.task-check:checked {animation:jrCheckPop .28s cubic-bezier(.2,.9,.25,1.25)}
+
+@keyframes jrSparkPulse {
+  0%,100% {opacity:.65; transform:scale(.94) rotate(0deg)}
+  50% {opacity:1; transform:scale(1.12) rotate(12deg)}
+}
+.ai-shortcut .spark, .msg-avatar {animation:jrSparkPulse 4.6s ease-in-out infinite}
+body.ai-busy .msg-avatar, body.ai-busy .ai-shortcut .spark {animation-duration:1.2s}
+
+@keyframes jrClockGlow {
+  0%,100% {text-shadow:0 0 18px rgba(90,150,255,.28),0 0 42px rgba(120,80,220,.18)}
+  50% {text-shadow:0 0 26px rgba(110,170,255,.46),0 0 64px rgba(130,90,230,.28)}
+}
+.focus-screen.running .focus-clock {animation:jrClockGlow 3.2s ease-in-out infinite}
+
+@keyframes jrAuroraDrift {
+  0% {transform:translate3d(-2%, -1%, 0) scale(1.04)}
+  50% {transform:translate3d(2%, 1.5%, 0) scale(1.08)}
+  100% {transform:translate3d(-2%, -1%, 0) scale(1.04)}
+}
+
+/* Light touch highlight for glass cards, disabled for touch-first perf. */
+@media (hover:hover) and (pointer:fine) {
+  html[data-wallpaper="aura"] .card:hover,
+  html[data-wallpaper="fluid"] .card:hover {
+    border-color:rgba(150,200,255,.34);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 16px 38px rgba(0,0,0,.26);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbutton.active .ico,
+  .sub-nav button.sel .ico,
+  .task-check:checked,
+  .ai-shortcut .spark,
+  .msg-avatar,
+  .focus-screen.running .focus-clock {animation:none !important}
+  html[data-wallpaper="aura"] .focus-ring::before,
+  html[data-wallpaper="fluid"] .focus-ring::before {animation:none !important}
+  /* STILL stays visible as a static gradient: hiding it made the page black. */
+}
+
+/* Nested task rows inside an explicit container block. */
+.task-parent-note{margin:2px 0 8px;padding:8px 10px;border:1px dashed var(--line-strong);border-radius:10px;font-size:12px;color:var(--sub)}
+.child-list{margin:6px 0 4px 14px;padding-left:8px;border-left:2px solid color-mix(in srgb,var(--accent) 45%,transparent)}
+.task-row.child{min-height:38px;padding-top:6px;padding-bottom:6px;background:color-mix(in srgb,var(--surface-2) 55%,transparent)}
+.task-row.child .task-time{font-size:11px;opacity:.9}
+.task-row.child .task-name{font-size:13px}
+.task-row.child .cat-dot{width:6px;height:6px}
+html[data-wallpaper="aura"] .task-row.child,html[data-wallpaper="fluid"] .task-row.child{background:rgba(8,16,32,.55)}
+html[data-theme="light"][data-wallpaper="aura"] .task-row.child,html[data-theme="light"][data-wallpaper="fluid"] .task-row.child{background:rgba(255,255,255,.74)}
+.actions [data-action="nest"]{color:var(--accent)}
+
+/* Clearer task editor: live summary and quick duration presets. */
+.task-preview{margin:10px 0 0;padding:9px 11px;border-radius:11px;background:var(--surface-2);border:1px solid var(--line);font-size:12px;line-height:1.45;color:var(--sub)}
+.dur-presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.dur-presets .btn{min-height:36px;padding:6px 10px;font-size:11px}
+.list-hint{font-size:11.5px;color:var(--muted);margin:2px 0 6px;line-height:1.4}
+
+/* Minimal settings: compact filters, collapsible goals and advanced settings. */
+.filter-row{gap:4px;margin:4px 0}
+.filter-row button{min-height:38px;padding:6px 8px;font-size:11px}
+.past-toggle{min-height:34px!important;padding:6px 8px!important;font-size:11px!important}
+.insight-card{padding:12px 14px!important}
+.insight-card .tagline{font-size:11.5px!important;line-height:1.35!important;margin:3px 0 8px!important}
+.insight-card .insight-top b{font-size:13.5px!important;line-height:1.3!important}
+.goals-details>summary{list-style:none;cursor:pointer;margin-bottom:0}
+.goals-details>summary::-webkit-details-marker{display:none}
+.goals-details[open]>summary{margin-bottom:6px}
+.goals-body{padding-top:2px}
+.settings-advanced{margin:10px 0;border:1px solid var(--line);border-radius:14px;padding:0 12px;background:var(--card)}
+.settings-advanced>summary{cursor:pointer;padding:12px 0;font-size:12px;font-weight:700;color:var(--sub);list-style:none}
+.settings-advanced>summary::-webkit-details-marker{display:none}
+.settings-advanced .card{border:0;background:transparent;padding-left:0;padding-right:0;box-shadow:none;margin:0}
+.settings-advanced .btn{margin:8px 0 10px}
+.jr-week-label{display:none}
+.jr-date-nav{padding:8px 10px!important}
+.jr-date-nav .jr-date-picker,.jr-date-nav .jr-date-controls>button[data-jr-action="move"]{display:none!important}
+.jr-date-nav .jr-date-controls{display:flex!important;grid-template-columns:none!important;gap:6px;padding:0!important}
+.jr-date-nav .jr-date-controls>button[data-jr-action="today"],.jr-date-nav .jr-date-controls>button[data-jr-action="toggle"]{flex:1;min-height:38px}
+#pushReconnect[hidden]{display:none!important}

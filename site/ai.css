@@ -1,0 +1,131 @@
+/* ── JARVIS AI · chat-first, settings behind gear ── */
+
+/* Header */
+.ai-head{display:flex;align-items:center;gap:8px;margin:2px 0 6px;padding:4px 0;min-height:36px}
+.ai-status{font-size:10px;color:var(--sub);margin:0 4px;flex:1}
+.ai-head .iconbtn{margin-left:auto}
+
+/* Status chip */
+.ai-chip{display:inline-flex;align-items:center;width:10px;height:10px;border-radius:50%;margin-right:4px;flex:none}
+.ai-chip.ok{background:var(--green);box-shadow:0 0 4px var(--green)}
+.ai-chip.fail{background:var(--orange);box-shadow:0 0 4px var(--orange)}
+.ai-alert{background:#3a2e1a;border:1px solid #b8944a50;color:#f5e0b0;border-radius:8px;padding:8px 11px;font-size:11px;line-height:1.4;margin:0 0 8px}
+.ai-tiny{font-size:10px;color:var(--sub);line-height:1.45;margin:4px 0}
+.ai-divider{height:1px;background:var(--line);margin:10px 0}
+
+/* Settings panel (hidden behind gear) */
+.ai-settings{display:none;margin:0 0 10px}
+.ai-settings.show{display:block}
+.ai-set-block{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:11px 12px;margin:6px 0}
+.ai-set-block h2{font-size:13px;font-weight:700;margin:0 0 4px}
+.ai-set-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.ai-set-head h2{margin:0}
+.ai-lbl{display:block;font-size:10px;color:var(--sub);margin:8px 0 3px}
+.ai-input{width:100%;border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:8px;padding:9px 11px;font-size:13px}
+
+/* Actions row */
+.ai-actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 2px}
+.ai-check{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--sub);margin:8px 0 2px;min-height:28px}
+
+/* Model/autonomy mode selector */
+.ai-mode{display:flex;gap:4px;margin:6px 0 2px}
+.ai-mode button{flex:1;padding:7px 4px;border-radius:8px;border:1px solid var(--line);font-size:10px;font-weight:600;color:var(--sub);background:var(--bg2);min-height:32px}
+.ai-mode button.on{background:var(--card);color:var(--text);border-color:var(--accent)}
+
+/* Chat area */
+.ai-chat{display:flex;flex-direction:column;gap:4px;min-height:calc(100dvh - var(--navH) - 180px)}
+.ai-messages{display:flex;flex-direction:column;gap:6px;padding:4px 0;margin:0;flex:1 1 auto;min-height:120px;overflow-y:auto;scrollbar-width:thin}
+.ai-msg{max-width:92%;font-size:13px;line-height:1.5;padding:9px 12px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
+.ai-msg.user{align-self:flex-end;background:var(--accent);color:#0b112b;border-bottom-right-radius:4px}
+.ai-msg.assistant{align-self:flex-start;background:var(--card);color:var(--text);border:1px solid var(--line);border-bottom-left-radius:4px}
+.ai-msg small{display:block;font-size:9px;opacity:.7;margin-bottom:3px;font-weight:700;letter-spacing:.04em}
+
+/* Proposals */
+.ai-proposals{display:flex;flex-direction:column;gap:6px}
+.ai-proposals-head{font-size:10px;font-weight:700;color:var(--green);letter-spacing:.04em;text-transform:uppercase;margin:2px 0}
+.ai-proposal{border:1px solid var(--green);border-radius:var(--radius);padding:10px 11px;background:var(--card)}
+.ai-proposal b{font-size:12px;display:block;line-height:1.35}
+.ai-proposal .meta{font-size:10px;color:var(--green);margin:3px 0}
+.ai-proposal .reason{font-size:10px;color:var(--sub);margin:3px 0;line-height:1.4}
+.ai-proposal .actions{display:flex;gap:6px;margin:7px 0 0}
+
+/* Composer */
+.ai-composer{display:flex;flex-direction:column;gap:4px;position:sticky;bottom:calc(var(--navH) + env(safe-area-inset-bottom,0px) + 4px);background:color-mix(in srgb,var(--bg) 72%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:6px 8px 4px;margin-top:2px}
+.ai-composer-main{display:flex;align-items:flex-end;gap:6px}
+.ai-tools{display:flex;gap:2px}
+.ai-tool{width:32px;height:32px;min-width:32px;min-height:32px;border-radius:9px;color:var(--sub);background:transparent;font-size:15px;display:grid;place-items:center}
+.ai-tool:active{background:var(--surface-2)}
+.ai-composer textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft,rgba(124,179,255,.18))}
+.ai-image-preview{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.ai-image-preview img{max-height:80px;border-radius:10px;border:1px solid var(--line)}
+.ai-composer textarea{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--text);flex:1;min-width:0;min-height:42px;max-height:110px;resize:none;line-height:1.4}
+.ai-composer textarea:focus{border-color:var(--accent)}
+.ai-send{flex:none;width:42px;height:42px;min-width:42px;border-radius:100px;background:var(--accent);color:#0b112b;font-size:16px;font-weight:800;display:grid;place-items:center}
+.ai-send:disabled{opacity:.4}
+
+/* Analytics inside settings (compact) */
+.ai-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}
+.ai-stat{background:var(--bg2);border-radius:8px;padding:8px 10px}
+.ai-stat span{display:block;font-size:9px;color:var(--sub)}
+.ai-stat b{font-size:14px;font-weight:700}
+.progressbar{background:var(--bg2);border-radius:99px;height:3px;overflow:hidden;margin:2px 0 6px}
+.progressbar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:99px}
+
+/* ── Animations & Microinteractions ── */
+@keyframes fadeSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scalePop{0%{transform:scale(.92);opacity:.7}60%{transform:scale(1.04);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes taskCheck{0%{background-position:100% 0}100%{background-position:0 0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.ai-msg{animation:fadeSlide .25s ease-out both}
+.ai-proposal{animation:fadeSlide .3s ease-out both}
+.task-row{transition:transform .15s ease,opacity .15s ease,background .2s ease}
+.task-row:active{transform:scale(.97)}
+.taskcheck:checked+.tasklabel,.taskcheck:checked+label+.tasklabel{animation:taskCheck .4s linear}
+.smart-banner{animation:fadeSlide .25s ease-out}
+.ai-action-entry{animation:fadeIn .2s ease-out}
+.modalback.show{animation:fadeIn .2s ease-out}
+#toast{animation:fadeSlide .2s ease-out;transition:opacity .25s}
+.card,.ai-set-block{transition:box-shadow .2s ease,transform .15s ease}
+.navbutton{transition:color .2s ease,border-color .2s ease}
+.navbutton.active{transition:color .15s ease}
+@media(prefers-reduced-motion){.task-row,.ai-msg,.card,.navbutton{transition:none!important;animation:none!important}}
+
+/* ── Light theme support ── */
+@media(prefers-color-scheme:light){
+:root{--bg:#f5f5f7;--bg2:#eceef0;--card:#fff;--line:rgba(0,0,0,.09);--text:#1a1d23;--sub:#5a6778;--muted:#8e9ba8;--accent:#3370d9;--green:#3cb371;--orange:#d9832a}
+}
+
+/* Status indicator */
+.ai-status{font-size:10px;color:var(--sub)}
+
+/* Action history */
+.ai-action-log{display:flex;flex-direction:column;gap:2px;max-height:220px;overflow-y:auto;font-size:10px}
+.ai-action-entry{display:flex;align-items:center;gap:6px;padding:5px 8px;border-bottom:1px solid var(--line);min-height:28px}
+.ai-action-entry.undone{opacity:.5}
+.ai-action-icon{flex:none;width:16px;text-align:center}
+.ai-action-desc{flex:1;min-width:0;line-height:1.3}
+.ai-action-desc small{display:block;font-size:8px;color:var(--muted)}
+/* JARVIS 3.2 — mobile readability and actionable conflict controls */
+#app .task-name{display:block;-webkit-line-clamp:unset;-webkit-box-orient:initial;overflow:visible;overflow-wrap:anywhere;word-break:normal;line-height:1.42}
+#app .task-name small{overflow-wrap:anywhere;line-height:1.4}
+#app .task-row{align-items:center;min-height:50px}
+#app .task-check{width:27px;height:27px;min-width:27px;border-width:2px}
+#app .task-check.buffer{width:12px;min-width:12px;height:12px}
+#app .task-details .actions button,#app .task-details .smart-task-actions button{min-height:42px;min-width:42px;padding:9px 10px;font-size:12px;line-height:1.25}
+#app .filter-row button,#app .sub-nav button{min-height:42px;font-size:12px}
+#app .today-progress small{font-size:10px;line-height:1.25;max-width:110px}
+.task-conflict-note{margin-top:12px;padding:12px;border:1px solid #d29c58;background:rgba(186,116,38,.13);border-radius:10px;color:var(--text);font-size:13px;line-height:1.5}
+.task-conflict-note strong{display:block;margin-bottom:4px}
+.task-conflict-list{margin:4px 0 10px;padding-left:18px;max-height:100px;overflow:auto}
+.task-conflict-actions{display:flex;flex-wrap:wrap;gap:8px}
+.task-conflict-actions button{flex:1 1 auto;border:1px solid var(--line);border-radius:9px;min-height:44px;padding:9px 11px;color:var(--text);background:var(--card);font-size:12px;font-weight:650}
+.task-conflict-actions button.primary{background:var(--accent);color:#101a2b;border-color:var(--accent)}
+.past-toggle,.week-overview-toggle{width:100%;text-align:left;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--sub);padding:10px 12px;font-size:12px;font-weight:650;margin:6px 0}
+@media(max-width:380px){#app .task-name{font-size:13px}#app .task-time{width:43px}}
+
+/* Explicit override has higher specificity than the automatic light-mode media query. */
+:root[data-theme="light"]{color-scheme:light;--bg:#f5f5f7;--bg2:#eceef0;--card:#fff;--line:rgba(0,0,0,.09);--text:#1a1d23;--sub:#5a6778;--muted:#657180;--accent:#3370d9;--green:#23875c;--orange:#bf731e}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0b1120;--bg2:#101a2b;--card:#162239;--line:#283752;--text:#edf2fa;--sub:#95a9c3;--muted:#7186a4;--accent:#7db4ff;--green:#58cfa1;--orange:#e99c5e}
+
+:root[data-theme="auto"] [data-ux-theme="auto"],:root:not([data-theme]) [data-ux-theme="auto"],:root[data-theme="light"] [data-ux-theme="light"],:root[data-theme="dark"] [data-ux-theme="dark"]{border-color:var(--accent);font-weight:800}

@@ -1,0 +1,14 @@
+# Defense in depth: never deploy old schedule dumps or local backups.
+# The release gate also fails if any private schedule is kept under site/.
+plans_const.txt
+*plans_const*
+*.bak
+*.backup
+*.sql
+*.sqlite
+*.db
+.env
+.env.*
+.dev.vars
+private/
+backups/

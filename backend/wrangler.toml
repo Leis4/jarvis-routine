@@ -1,0 +1,19 @@
+name = "jarvis-routine-api"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# ВАЖНО: замените на точный origin, например https://jarvis-routine.demo.workers.dev
+ALLOWED_ORIGIN = "https://jarvis-routine.demo.workers.dev"
+# AITUNNEL: стандартный адрес, резервный — https://ru-api.aitunnel.ru/v1
+QWEN_BASE_URL = "https://api.aitunnel.ru/v1"
+VAPID_SUBJECT = "mailto:demo@example.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "routine-db"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+[triggers]
+crons = ["*/5 * * * *"]
